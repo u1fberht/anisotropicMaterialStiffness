@@ -47,11 +47,6 @@ sMatrix = [
 
 cMatrix = np.linalg.inv(sMatrix)
 
-s_1 = [sMatrix[0]]
-s_2 = [sMatrix[1]]
-s_3 = [sMatrix[2]]
-
-
 # Stress Matrix
 
 sigma_x = [
@@ -60,14 +55,20 @@ sigma_x = [
 			[tau_xy]
 		  ]
 
+# Variant 1
+
 sigma_1 = np.matmul(T1, sigma_x)
 
-# Epsilon Matrix
+inverseT2 = np.linalg.inv(T2)
+epsilon_1_var1 = np.matmul(sMatrix, sigma_1)
 
-epsilon_x = np.matmul(sMatrix, sigma_x)
-epsilon_1 = np.matmul(T2, epsilon_x)
-
-# Constructing shear strain variable
+epsilon_x_var1 = np.matmul(inverseT2, epsilon_1_var1)
 
 gamma_12 = (sigma_1[2][0])/(G_12)
-print(gamma_12)
+
+# Variant 2
+
+s_x = sMatrix[0]
+
+epsilon_x_var2 = np.matmul(s_x, sigma_x)
+epsilon_1_var2 = np.matmul(sMatrix, sigma_1)
